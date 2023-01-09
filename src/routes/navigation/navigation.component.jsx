@@ -3,12 +3,17 @@ import { Fragment, useContext } from 'react';
 
 import { ReactComponent as CrwnLogo} from '../../assets/crown.svg' 
 import { UserContext } from '../../context/user.context';
+import { OpenCartContext } from '../../context/cart-open.context'
 import { signOutUser } from '../../utils/firebase/firebase.utils'
+
+import CartIcon from '../../components/cart-icon/cart-icon.component'
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 
 import './navigation.styles.scss';
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext);
+    const { isCartOpen } = useContext(OpenCartContext);
 
     const signOutHandler = async () => {
          await signOutUser();
@@ -21,24 +26,27 @@ const Navigation = () => {
                 <CrwnLogo className='logo'/>
             </Link>
             <div className='nav-links-container'>
-                <Link className='nav-link' to='/shop'> 
-                    <div>SHOP</div>
-                </Link>
-            </div>
+            <Link className='nav-link' to='/shop'> 
+                <div>SHOP</div>
+            </Link>    
+
             {
                 currentUser ? (
-                    <span className='nav-links-container' onClick={signOutHandler}>
+                    <span className='nav-link' onClick={signOutHandler}>
                         SIGN OUT
                     </span>
                 ) : (
-                    <div className='nav-links-container'>
-                        <Link className='nav-link' to='/auth'> 
-                            <div>SIGN IN</div>
-                        </Link>
-                    </div>
+                    <Link className='nav-link' to='/auth'> 
+                        <div>SIGN IN</div>
+                    </Link>
                 )
             }
-
+            <CartIcon className='nav-link'/>
+            </div>
+            {
+                isCartOpen && <CartDropdown/>
+            }
+            
         </div>
         <Outlet/>
       </Fragment>
