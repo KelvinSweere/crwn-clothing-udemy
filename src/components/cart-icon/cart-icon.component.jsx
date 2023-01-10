@@ -7,13 +7,14 @@ import './cart-icon.component.scss'
 
 const CartIcon = () => {
     const { isCartOpen, setIsOpen } = useContext(CartContext);
-    
+    const { cartCount } = useContext(CartContext);
+
     const handleClickEvent = () => setIsOpen(!isCartOpen);
-        
+
     return (
         <div className='cart-icon-container' onClick={handleClickEvent}>
             <ShoppingIcon className='shopping-icon'/>
-            <span className='item-count'>10</span>
+            <span className='item-count'>{cartCount}</span>
         </div>
     );
 }
