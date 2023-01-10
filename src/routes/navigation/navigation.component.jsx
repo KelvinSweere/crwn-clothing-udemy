@@ -3,7 +3,7 @@ import { Fragment, useContext } from 'react';
 
 import { ReactComponent as CrwnLogo} from '../../assets/crown.svg' 
 import { UserContext } from '../../context/user.context';
-import { OpenCartContext } from '../../context/cart-open.context'
+import { CartContext } from '../../context/cart.context'
 import { signOutUser } from '../../utils/firebase/firebase.utils'
 
 import CartIcon from '../../components/cart-icon/cart-icon.component'
@@ -13,7 +13,7 @@ import './navigation.styles.scss';
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext);
-    const { isCartOpen } = useContext(OpenCartContext);
+    const { isCartOpen } = useContext(CartContext);
 
     const signOutHandler = async () => {
          await signOutUser();
