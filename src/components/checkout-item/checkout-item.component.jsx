@@ -1,46 +1,40 @@
-import './checkout-item.styles.scss'
-
 import { useContext } from 'react';
-import { CartContext } from '../../context/cart.context'
 
-const CheckoutItem = ({cardItem}) => {
-    const {name, imageUrl, price, quantity} = cardItem;
-    const { addItemToCart, removeItemToCart, clearItemToCart } = useContext(CartContext);
+import { CartContext } from '../../contexts/cart.context';
 
-    const handleClearCartItem = () => clearItemToCart(cardItem);
+import './checkout-item.styles.scss';
 
-    const decreaseQuantity = () => {
-        removeItemToCart(cardItem);
-    }
+const CheckoutItem = ({ cartItem }) => {
+  const { name, imageUrl, price, quantity } = cartItem;
 
-    const increaseQuantity = () => {
-        addItemToCart(cardItem);
-    }
+  const { clearItemFromCart, addItemToCart, removeItemToCart } =
+    useContext(CartContext);
 
-    return(
-        <div className='checkout-item-container'>
-            <div className='image-container'>
-                <img src={imageUrl} alt={name}></img>
-            </div>
-            
-            <span className='name'>{name}</span>
+  const clearItemHandler = () => clearItemFromCart(cartItem);
+  const addItemHandler = () => addItemToCart(cartItem);
+  const removeItemHandler = () => removeItemToCart(cartItem);
 
-            <span className='quantity'>
-                <div className='arrow' onClick={decreaseQuantity}>
-                    &#10094;
-                </div>
-                <span className='value'>{quantity}</span>
-                <div className='arrow' onClick={increaseQuantity}>
-                    &#10095;
-                </div>
-            </span>
-
-            <span className='price'>{price}</span>
-
-            <div onClick={handleClearCartItem} className='remove-button'>&#10005;</div>
-
+  return (
+    <div className='checkout-item-container'>
+      <div className='image-container'>
+        <img src={imageUrl} alt={`${name}`} />
+      </div>
+      <span className='name'> {name} </span>
+      <span className='quantity'>
+        <div className='arrow' onClick={removeItemHandler}>
+          &#10094;
         </div>
-    );
-}
+        <span className='value'>{quantity}</span>
+        <div className='arrow' onClick={addItemHandler}>
+          &#10095;
+        </div>
+      </span>
+      <span className='price'> {price}</span>
+      <div className='remove-button' onClick={clearItemHandler}>
+        &#10005;
+      </div>
+    </div>
+  );
+};
 
 export default CheckoutItem;
