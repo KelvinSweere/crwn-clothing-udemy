@@ -26,11 +26,11 @@ const Checkout = () => {
         <HeaderBlock>
           <span>Remove</span>
         </HeaderBlock>
+        </CheckoutHeader>
         {cartItems.map((cartItem) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <Total>Total: ${cartTotal}</Total>
-      </CheckoutHeader>
     </CheckoutContair>
 );
 };
