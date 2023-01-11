@@ -1,5 +1,5 @@
 import React from 'react'
-import CategoryItem from "../category/category.component";
+import CategoryItem from "../../routes/category/category.component";
 
 import "../category-menu/category-menu.component.scss"
 
