@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth, 
   signInWithRedirect,
-  signInWithPopup, 
+  signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -34,16 +34,19 @@ const firebaseConfig = {
   appId: "1:683432530616:web:7f721f6855ea9c730f9a4d"
 };
 
-// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-  prompt: "select_account"
+const googleProvider = new GoogleAuthProvider();
+
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
 
@@ -64,7 +67,7 @@ export const addCollectionAndDocuments = async (
 };
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, 'category');
+  const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
@@ -73,47 +76,52 @@ export const getCategoriesAndDocuments = async () => {
     acc[title.toLowerCase()] = items;
     return acc;
   }, {});
+
   return categoryMap;
-}
+};
 
 export const createUserDocumentFromAuth = async (
-    userAuth, 
-    additionalInformation = {}
-  ) => {
-  if(!userAuth) return;
+  userAuth,
+  additionalInformation = {}
+) => {
+  if (!userAuth) return;
 
   const userDocRef = doc(db, 'users', userAuth.uid);
-  const userSnapShot = await getDoc(userDocRef);
-  if(!userSnapShot.exists()) {
-    const {displayName, email} = userAuth;
-    const createAt = new Date();
 
-    try{
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
       await setDoc(userDocRef, {
         displayName,
         email,
-        createAt,
-        ...additionalInformation
+        createdAt,
+        ...additionalInformation,
       });
-    }
-    catch (error){
-      console.log('error creating the user ', error.message);
+    } catch (error) {
+      console.log('error creating the user', error.message);
     }
   }
 
   return userDocRef;
-}
+};
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
+
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
+
   return await signInWithEmailAndPassword(auth, email, password);
-}
+};
 
 export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListner = (callback) => onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
