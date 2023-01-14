@@ -13,8 +13,7 @@ const Shop = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    console.log('hit');
-    dispatch(fetchCategoriesStartAsync);
+    dispatch(fetchCategoriesStartAsync());
   }, []);
 
   return (
