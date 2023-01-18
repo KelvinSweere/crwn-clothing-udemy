@@ -1,14 +1,13 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const subColor = 'grey';
 const mainColor = 'black';
 
-
 const shrinkLabelStyles = css`
   top: -14px;
   font-size: 12px;
-  color: ${mainColor};  
-`
+  color: ${mainColor};
+`;
 
 export const FormInputLabel = styled.label`
   color: ${subColor};
@@ -19,9 +18,9 @@ export const FormInputLabel = styled.label`
   left: 5px;
   top: 10px;
   transition: 300ms ease all;
+  ${({ shrink }) => shrink && shrinkLabelStyles};
+`;
 
-  ${({shrink}) => shrink && shrinkLabelStyles};
-`
 export const Input = styled.input`
   background: none;
   background-color: white;
@@ -39,10 +38,10 @@ export const Input = styled.input`
     outline: none;
   }
 
-  &:focus ~ .form-input-label {
-    ${shrinkLabelStyles}
+  &:focus ~ ${FormInputLabel} {
+    ${shrinkLabelStyles};
   }
-`
+`;
 
 export const Group = styled.div`
   position: relative;
@@ -51,8 +50,4 @@ export const Group = styled.div`
   input[type='password'] {
     letter-spacing: 0.3em;
   }
-
-  .form-input-label {
-
-  }
-`
+`;
