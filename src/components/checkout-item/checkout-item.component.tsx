@@ -16,8 +16,13 @@ import {
   Value,
   RemoveButton,
 } from './checkout-item.styles';
+import { CartItem } from '../../store/cart/cart.types';
 
-const CheckoutItem = ({ cartItem }) => {
+type CheckItemParam = {
+  cartItem: CartItem
+}
+
+const CheckoutItem = ({ cartItem } : CheckItemParam) => {
   const { name, imageUrl, price, quantity } = cartItem;
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
