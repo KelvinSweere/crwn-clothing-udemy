@@ -1,4 +1,3 @@
-import { Category } from '../../store/categories/category.types';
 import DirectoryItem from '../directory-item/directory-item.component';
 
 import { DirectoryContainer } from './directory.styles';
